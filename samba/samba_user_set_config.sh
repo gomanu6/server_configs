@@ -42,7 +42,7 @@ function samba_user_set_config () {
             echo "[samba_user_set_config]: Samba Config File exists....Making a backup"
         
         
-            if cp -v "${samba_global_config_file}" "${samba_global_config_file}.backup.$(date +%Y_%m_%d)"
+            if cp -v "${samba_global_config_file}" "${samba_global_config_file}.backup.$(date +%Y_%m_%d)"; then
                 echo "[samba_user_set_config]: Backup successful of Global Samba Config file"
 
 
@@ -56,13 +56,8 @@ function samba_user_set_config () {
 
                 else
                     echo "[samba_user_set_config]: WARNING !! Unable to include link in smb.conf"
-
+                    exit 1
                 fi
-
-
-
-
-
 
             else
                 echo "[samba_user_set_config]: WARNING !! Unable to Backup Global Samba Config file ... Aborting"
@@ -77,6 +72,7 @@ function samba_user_set_config () {
         
         else
             echo "[samba_user_set_config]: WARNING !! Global Samba Config file does not exist"
+            exit 1
         fi
 
 

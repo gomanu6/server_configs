@@ -22,14 +22,14 @@ function create_lvm_partition () {
     if [ -d "${vg_path}" ]; then
         echo "[lvm]: Volume Group ${vg_name} exists"
     
-        if [ lvcreate -v -L "${lv_size}" -n "${lv_name}" "${vg_name}" ]; then
+        if lvcreate -v -L "${lv_size}" -n "${lv_name}" "${vg_name}"; then
             echo "[create_lvm]: created new LV '${lv_name}'"
 
             if [ mkfs.ext4 -v -L "${volume_label}" "${lv_path}" ]; then
                 echo "[create_lvm]: Partioning new LV"
 
                 
-                if cp -v "${fstab_file}" "${fstab_file}.backup.${day_string}"
+                if cp -v "${fstab_file}" "${fstab_file}.backup.${day_string}"; then
                     echo "[create_lvm]: Created Backup of fstab file"
 
 

@@ -22,6 +22,7 @@ function system_user_add () {
 
     else
         echo "[system_user_add]: WARNING !! There was an error in adding ${username} to the system"
+        exit 1
     fi
 
 

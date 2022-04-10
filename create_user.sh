@@ -19,18 +19,14 @@ if [ "$(id -u)" -eq 0 ]; then
 
     suggested_username="${first_name_lower}_${last_name_lower}"
 
-    if grep -E -wi "$sugegsted_username" /etc/passwd >/dev/null; then
+    if grep -Ewi  "${suggested_username}" /etc/passwd > /dev/null; then
         echo "[create_user]: WARNING !! The suggested Username ${suggested_username} already exists. please suggest a unique username"
         read -rp "Enter username to create : " input_username
         username="${input_username}"
     else
-        read -rp "[create_user]: The suggested Username ${suggested_username} does not exist. Confirm to use the same ?" answer
-        if [ "${answer,,}" -eq "y" ] || [ "${answer,,}" -eq "yes"]; then
-            username="${suggested_username}"
-        else
-            read -rp "Enter username to create : " input_username
-            username="${input_username}"
-        fi
+        read -rp "[create_user]: Enter a username. Default is ${suggested_username}" answer
+        name="${answer,,}"
+        username="${name:=$suggested_username}"
     fi
 
 
@@ -54,7 +50,7 @@ if [ "$(id -u)" -eq 0 ]; then
                     echo "[create_user]: ${username} Samba Config has been set"
 
 
-                    if create_lvm_partition "${username}"
+                    if create_lvm_partition "${username}"; then
                         echo "[create_user]: LV created"
                     else
                         echo "[create_user]: WARNING!! Problem creating LV"
