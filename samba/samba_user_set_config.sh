@@ -32,16 +32,12 @@ function samba_user_set_config () {
     fi
 
 
-
     echo "[samba_user_set_config]: Creating Samba Config file for ${username}"
 
     if samba_user_config "${username}"; then
         echo "[samba_user_set_config]: Created User Config File for Samba"
     
         echo "[samba_user_set_config]: Adding Configuration file link in smb.conf"
-
-
-
 
     else
         echo "[samba_user_set_config]: WARNING !! uNABLE TO Create Samba Config File for user"

@@ -19,8 +19,6 @@ function create_lvm_partition () {
     local new_user_data_dir="${new_user_data_parent_dir}${username}" 
 
     
-
-
     if [ -d "${vg_path}" ]; then
         echo "[lvm]: Volume Group ${vg_name} exists"
     
@@ -31,16 +29,26 @@ function create_lvm_partition () {
                 echo "[create_lvm]: Partioning new LV"
 
                 
-                UUID="$(sudo blkid -s UUID -o value ${lv_path})"
-
-                local new_fstab_entry="UUID=${UUID}  ${new_user_data_dir}    ext4    defaults    0   0"
-
-                echo "${new_fstab_entry}" | tee -a "${fstab_file}"
-
-                mount -v -L "${lv_path}" "${new_user_data_dir}"
-                
+                if cp -v "${fstab_file}" "${fstab_file}.backup.${day_string}"
+                    echo "[create_lvm]: Created Backup of fstab file"
 
 
+                    local UUID="$(sudo blkid -s UUID -o value ${lv_path})"
+
+                    local new_fstab_entry="UUID=${UUID}  ${new_user_data_dir}    ext4    defaults    0   0"
+
+                    echo "${new_fstab_entry}" | tee -a "${fstab_file}"
+
+                    mount -v "${lv_path}" "${new_user_data_dir}"
+
+
+
+                else
+                    echo "[create_lvm]: WARNING!! Unable to create Backup of fstab file. Exiting"
+                    exit 1
+                fi
+
+              
             else
                 echo "[create_lvm]: WARNING Problem Partioning new LV"
                 exit 1
@@ -53,13 +61,11 @@ function create_lvm_partition () {
         fi
 
     else
+        echo "[lvm]: WARNING !! Volume Group Does not Exist."
+        exit 1
 
     fi
     
-
-        
-
-
 
 
 }

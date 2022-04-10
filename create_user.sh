@@ -54,7 +54,7 @@ if [ "$(id -u)" -eq 0 ]; then
                     echo "[create_user]: ${username} Samba Config has been set"
 
 
-                    if 
+                    if create_lvm_partition "${username}"
 
 
                 else
