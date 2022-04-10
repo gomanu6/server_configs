@@ -55,6 +55,10 @@ if [ "$(id -u)" -eq 0 ]; then
 
 
                     if create_lvm_partition "${username}"
+                        echo "[create_user]: LV created"
+                    else
+                        echo "[create_user]: WARNING!! Problem creating LV"
+                    fi
 
 
                 else
