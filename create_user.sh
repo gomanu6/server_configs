@@ -2,10 +2,10 @@
 
 . ./settings.config
 . ./user/system_user_add.sh
-. ./create_mountpoint.sh
-. ./samba_user_enable.sh
-. ./samba_user_set_config.sh
-. ./samba_user_config.sh
+. ./mount/create_mountpoint.sh
+. ./samba/samba_user_enable.sh
+. ./samba/samba_user_set_config.sh
+. ./samba/samba_user_config.sh
 
 
 

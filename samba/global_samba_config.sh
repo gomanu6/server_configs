@@ -1,10 +1,6 @@
 #!/bin/bash
 
 
-. ./global_samba_settings.config
-
-
-
 
 echo "[global_samba_config]: Creating Global Samba Config file"
     tee -a "$samba_config_file" > /dev/null << EOF
