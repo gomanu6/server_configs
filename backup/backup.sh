@@ -1,0 +1,6 @@
+#!/bin/bash
+
+
+
+
+rsync -hazv

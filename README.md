@@ -37,6 +37,7 @@ This will add a new user with relevant samba permissions
 - Backup directory
 - Schedule
 - options
+    z = compress
     v = verbose
     a = archive, = rlptgoD
         r = recursive, covered in -a
@@ -46,12 +47,12 @@ This will add a new user with relevant samba permissions
         g = preserve group, covered in -a
         o = preserve owner, covered in -a
         D = preserve device files, special files, covered in -a
+    h = human readable numbers
     b = make backups (suffix and backup-dir)
     ?H = preserve Hard Links
     A = preserve acl's, implies -p
     X = preserve extended attributes
     n = dry run
-    z = compress
-    h = human readable numbers
     c = checksum
+    --link-dest=DIR = Dir for Hard Linking files
 
