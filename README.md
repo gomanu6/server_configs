@@ -10,6 +10,8 @@ This will add a new user with relevant samba permissions
 - samba
 - git
 - firewall
+- fail2ban
+    - enable sshd jail
 - set timezone
 - zip
 
