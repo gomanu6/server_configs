@@ -14,6 +14,10 @@ This will add a new user with relevant samba permissions
     - enable sshd jail
 - set timezone
 - zip
+    -9 = max compression level
+    -r = recursive
+    -v = verbose
+    -q = quiet
 
 #### SSH Setup
 - port
