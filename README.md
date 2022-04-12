@@ -51,6 +51,8 @@ This will add a new user with relevant samba permissions
         D = preserve device files, special files, covered in -a
     h = human readable numbers
     b = make backups (suffix and backup-dir)
+        --suffix="_old"
+        --backup-dir="/path/"
     ?H = preserve Hard Links
     A = preserve acl's, implies -p
     X = preserve extended attributes
