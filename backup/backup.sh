@@ -13,7 +13,7 @@ function rsync_backup () {
     local dest=$2
     
     local todays_date="$(date +%Y-%m-%d)"
-    local 
+    
     
     if [ -z "$3" ]; then
         link_dest=""
@@ -23,13 +23,21 @@ function rsync_backup () {
         echo "[rsync_backup]: --link-dest parameter has been set."
     fi
     
-
-    echo "[backup]: Starting Backup for ${user}."
-    if rsync -hazvib --suffix="_older" ${link_dest} ${source} ${dest}; then
-        echo "[backup]: Backup for ${user} on ${todays_date} finished."
+    if [ -d "${dest}" ]; then
+        echo "[rsync_backup]: Destination directory for ${user} for ${todays_date} exists"
     else
-        echo "[backup]: WARNING!! Backup for ${user} on ${todays_date} failed."
+        echo "[rsync_backup]: No backup directory found for ${user}. Creating directory for ${todays_date}"
+        if mkdir -vp "${dest}"; then
+            echo "[rsync_backup]: Created backup directory for ${user}"
+        fi
+    fi
 
+    echo "[rsync_backup]: Starting Backup for ${user}."
+    if rsync -hazvib --suffix="_older" ${link_dest} ${source} ${dest}; then
+        echo "[rsync_backup]: Backup for ${user} on ${todays_date} finished."
+    else
+        echo "[rsync_backup]: WARNING!! Backup for ${user} on ${todays_date} failed."
+        exit 1
     fi
 
 
@@ -114,29 +122,7 @@ while IFS= read -r user; do
 
     fi
 
-
-
-
-
-    if [ -d "${dest}" ]; then
-        echo "[backup]: Destination directory for ${user} for ${todays_date} exists"
-
-    
-    else
-        
-        echo "[backup]: No backup directory found for ${user}. Creating directory for ${todays_date}"
-        if mkdir -vp "${dest}"; then
-            echo "[backup]: Created backup directory for ${user}"
-        fi
-
-    fi
-
-
-
-
-
-
-       
+     
 
     done < "${users_file}"
 
