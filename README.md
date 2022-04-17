@@ -65,3 +65,7 @@ This will add a new user with relevant samba permissions
     --link-dest=DIR = Dir for Hard Linking files
     i = itemize changes, output a change summary for all changes
 
+##### Backup Commands
+
+rsync_daily_backup $user $source $dest [$link_dest]
+
