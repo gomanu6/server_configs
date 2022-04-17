@@ -12,17 +12,51 @@ echo "[backup]: Reading users file for users to Backup"
 while IFS= read -r user; do
 
     user_folder_name=${user}
+    backup_time=$(date +%H%M%S)
 
     source="${source_base}${user_folder_name}/"
     user_dest="${dest_base_daily}${user_folder_name}/"
     log_file_base="${log_files_base_daily}"
     log_file_base_user="${log_file_base}${user_folder_name}/"
-    log_file="${log_file_base_user}${todays_date}.txt"
+    log_file="${log_file_base_user}${todays_date}_${backup_time}.txt"
     dest="${user_dest}${todays_date}"
 
+    if [ -d "${log_file_base_user}" ]; then
+        echo "[backup_daily]: Backup Log Directory exists."
+
+        echo "[backup_daily]: Creating log file for the current backup operation."
+        if touch "${log_file}"; then
+            echo "[backup_daily]: Log File created"
+        else
+            echo "[backup_daily]: WARNING!! Trouble creating Log file"
+        fi
+
+    else
+        echo "[backup_daily]: Backup Log Directory does not exist. Creating it .."
+        
+        if mkdir -vp "${log_file_base_user}"; then
+            echo "[backup_daily]: Log Directory created"
+
+            echo "[backup_daily]: Creating log file for the current backup operation."
+            if touch "${log_file}"; then
+                echo "[backup_daily]: Log File created"
+            else
+                echo "[backup_daily]: WARNING!! Trouble creating Log file"
+            fi
+
+        else
+            echo "[backup_daily]: WARNING !! Trouble creating Log Directory"
+
+        fi
+
+    fi
+
+
+
+
     echo
-    echo "-----${user}------------${todays_date}-----"
-    echo "[backup_daily]: Checking if ${user} folder exists." | tee -a "${log_file}"
+    echo "-----${user}------------${todays_date}-----" | tee -a "${log_file}"
+    echo "[backup_daily]: Checking if ${user} folder exists."
     if [ -d ${source} ]; then
         echo "[backup_daily]: ${user} folder exists." | tee -a "${log_file}"
 
