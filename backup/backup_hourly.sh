@@ -5,7 +5,7 @@
 
 
 users_file="${users_to_backup}"
-log_file_base="${log_files_base_daily}"
+log_file_base="${log_files_base_hourly}"
 
 
 echo "[backup]: Reading users file for users to Backup"
@@ -15,15 +15,15 @@ while IFS= read -r user; do
     user_folder_name=${user}
     
     backup_date="${todays_date}"
-    backup_time=$(date +%H%M%S)
+    backup_time=$(date +%H)
 
     source="${source_base}${user_folder_name}/"
     
-    log_file_base_user="${log_file_base}${user_folder_name}/"
+    log_file_base_user="${log_file_base}${user_folder_name}/${backup_date}/"
     log_file="${log_file_base_user}${backup_date}_${backup_time}.txt"
 
-    user_dest="${dest_base_daily}${user_folder_name}/"
-    dest="${user_dest}${backup_date}"
+    user_dest="${dest_base_hourly}${user_folder_name}/${backup_date}/"
+    dest="${user_dest}${backup_time}"
 
 
     echo "[backup_daily]: Checking if Backup Log Directory exists."
@@ -72,16 +72,16 @@ while IFS= read -r user; do
 
             echo "[backup_daily]: Checking previous Backup's for ${user}...." | tee -a "${log_file}"
 
-            for i in {-1..-15}; do 
+            for i in {-1..-12}; do 
 
                 echo "[backup]: Checking last backup directory for ${user}" | tee -a "${log_file}"
                 
-                date_to_check=$(date -d "${backup_date} ${i} days" +%Y-%m-%d)
-                date_folder_to_check="${user_dest}${date_to_check}"
+                time_to_check=$(date -d "${i} hours" +%H)
+                time_folder_to_check="${user_dest}${time_to_check}"
 
-                if [ -d "${date_folder_to_check}" ]; then
-                    link_dest="${date_folder_to_check}"
-                    echo "[backup]: Found backup directory for ${user} dated ${date_folder_to_check}. --link-dest parameter has been set" | tee -a "${log_file}"
+                if [ -d "${time_folder_to_check}" ]; then
+                    link_dest="${time_folder_to_check}"
+                    echo "[backup]: Found backup directory for ${user} at ${time_folder_to_check} Hours. --link-dest parameter has been set" | tee -a "${log_file}"
                     break
                 fi
 
