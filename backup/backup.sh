@@ -16,7 +16,7 @@ while IFS= read -r user; do
     user_folder_to_backup=${user}
 
     source="${source_base}${user_folder_to_backup}/"
-    user_dest="${dest_base}${user_folder_to_backup}/"
+    user_dest="${dest_base_daily}${user_folder_to_backup}/"
 
     dest="${user_dest}${todays_date}"
 

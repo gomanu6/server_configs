@@ -62,8 +62,9 @@ This will add a new user with relevant samba permissions
     X = preserve extended attributes
     n = dry run
     c = checksum
-    --link-dest=DIR = Dir for Hard Linking files
     i = itemize changes, output a change summary for all changes
+    --link-dest=DIR = Dir for Hard Linking files
+    --log-file=DIR
 
 ##### Backup Commands
 
