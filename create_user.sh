@@ -6,7 +6,7 @@
 . ./samba/samba_user_enable.sh
 . ./samba/samba_user_set_config.sh
 . ./samba/samba_user_config.sh
-. ./backup/new_user_backup.sh
+. ./backup/new_user_backup_config.sh
 
 
 if [ "$(id -u)" -eq 0 ]; then
@@ -53,7 +53,7 @@ if [ "$(id -u)" -eq 0 ]; then
                     if create_lvm_partition "${username}"; then
                         echo "[create_user]: LV created"
 
-                        if new_user_backup "${username}"; then
+                        if new_user_backup_config "${username}"; then
                             echo "[create_user]: "
 
                         else

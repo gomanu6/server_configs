@@ -39,7 +39,13 @@ function create_lvm_partition () {
 
                     echo "${new_fstab_entry}" | tee -a "${fstab_file}"
 
-                    mount -v "${lv_path}" "${new_user_data_dir}"
+                    if mount -v "${lv_path}" "${new_user_data_dir}"; then
+                        echo "[create_lvm]: LVM for User Directory has been mounted successfully"
+                        echo "[create_lvm]: Exiting to [create_user]"
+
+                    else
+                        echo "[create_lvm]: WARNING !! Unable to mount User LVM"
+                    fi
 
 
 

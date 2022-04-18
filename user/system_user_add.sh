@@ -9,7 +9,7 @@ function system_user_add () {
 
     # imported variables
     local new_user_data_dir="${new_user_data_parent_dir}${username}"
-    local samba_group="${smb_users_group}"
+    local samba_group="${samba_users_group}"
 
     if useradd --home "${new_user_data_dir}" --shell /usr/sbin/nologin -G "${samba_group}" "${username}"; then
         echo "[system_user_add]: successfully added ${username} to the system"
