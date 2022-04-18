@@ -4,7 +4,7 @@
 . ./rsync_backup.sh
 
 
-users_file="${users_to_backup}"
+users_file="${active_users}"
 log_file_base="${log_files_base_hourly}"
 
 
