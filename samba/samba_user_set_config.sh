@@ -8,10 +8,10 @@ function samba_user_set_config () {
 
 
     # imported variables
-    local new_user_data_dir="${new_user_data_parent_dir}${username}"
-    local smb_users_group="${smb_users_group}"
-    local samba_global_config_file="${samba_global_config_file}"
+    local new_user_data_dir="${new_user_data_parent_dir}${username}/"
+    local smb_users_group="${samba_users_group}"
     local smb_admins_group="${smb_admins_group}"
+    local samba_global_config_file="${samba_global_config_file}"
     local samba_users_config_dir="${samba_users_config_dir}"
     local samba_user_config_file="${samba_users_config_dir}${username}.conf"
 

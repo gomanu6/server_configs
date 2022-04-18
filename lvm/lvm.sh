@@ -41,6 +41,7 @@ function create_lvm_partition () {
 
                     if mount -v "${lv_path}" "${new_user_data_dir}"; then
                         echo "[create_lvm]: LVM for User Directory has been mounted successfully"
+                        
                         echo "[create_lvm]: Exiting to [create_user]"
 
                     else

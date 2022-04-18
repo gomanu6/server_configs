@@ -2,7 +2,7 @@
 
 
 
-function new_user_backup_settings () {
+function new_user_backup_config () {
 
     local username=$1
     local active_users="${active_users}"
