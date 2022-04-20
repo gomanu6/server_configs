@@ -7,7 +7,7 @@
 function create_system_user () {
 
 
-    local username=$1
+    local input_username=$1
     local password=$2
     local user_shell=$3
     local append_groups=$4
@@ -15,34 +15,31 @@ function create_system_user () {
     if [ -z "$4" ]; then
         append_groups=""
     else
-        echo "[rsync_backup]: $4 groups to be appended."
+        echo "[create_system_user]: $4 groups to be appended."
         append_groups="-G $4"
-        echo "[rsync_backup]: groups to be appended parameter has been set."
+        echo "[create_system_user]: groups to be appended parameter has been set."
     fi
 
 
-    local user_home_dir="${base_home_dir}${username}"
 
 
 
 
     while :
     do
-        echo "Enter Username to create : "
-        read input_username
 
         if [ -z "${input_username}" ]; then
-            echo "Input Username is blank"
+            echo "[create_system_user]: WARNING !! Input Username is blank"
         else
-            echo "The entered username is ${input_username}"
+            echo "[create_system_user]: The entered username is ${input_username}"
 
             if id -u "${input_username}" > /dev/null 2>&1; then
-                echo "[check_if_user_exists]: WARNING !! ${input_username} already exists, please suggest a unique username."
+                echo "[create_system_user]: WARNING !! ${input_username} already exists, please suggest a unique username."
                 # exit 1        
             else
-                echo "[check_if_user_exists]: ${input_username} does not exist in the system."
+                echo "[create_system_user]: ${input_username} does not exist in the system."
                 username="${input_username}"
-                echo "Creating ${username}"
+                #echo "Creating ${username}"
                 break
                 # exit 0
             fi
@@ -53,36 +50,21 @@ function create_system_user () {
     done
 
 
+    local user_home_dir="${base_home_dir}${username}"
+   
+    if useradd --home "${user_home_dir}" --shell /usr/sbin/nologin "${append_groups}" "${username}"; then
+        echo "[create_system_user]: successfully added ${username} to the system"
+
+        if echo "$username:$password" | chpasswd; then
+            echo "[create_system_user]: Password has been set for ${username}"
+            # echo "[create_system_user]: User has been added to the system. Returning control to [create_user]"
+        fi
 
 
-
-
-
-
-
-
-    # if check_if_user_exists "${username}"; then
-    # echo "[create_system_user]: Checking if ${username} already exists"
-    # if grep -Ewi  "${username}" /etc/passwd > /dev/null; then
-    #     echo "[create_user]: WARNING !! ${username} already exists. please suggest a unique username"
-    #     read -rp "Enter username to create : " input_username
-        
-    #     if [ -z "${input_username}" ]; then
-    #         echo "[]: WARNING !! username field is blank. Please enter a username."
-    #     else
-    #         username="${input_username}"
-        
-    # else
-    #     read -rp "[create_user]: Enter a username. Default is ${suggested_username}" answer
-    #     name="${answer,,}"
-    #     username="${name:=$suggested_username}"
-    # fi
-
-
-
-
-
-    if useradd --home "${user_home_dir}" --shell "${user_shell}" "${append_groups}" "${username}"; then
+    else
+        echo "[create_system_user]: WARNING !! There was an error in adding ${username} to the system"
+        exit 1
+    fi
 
 
 
