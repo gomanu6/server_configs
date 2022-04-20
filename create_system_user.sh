@@ -1,6 +1,8 @@
 #!/bin/bash
 
 . ./ascpl.config
+. ./check_if_user_exists.sh
+
 
 function create_system_user () {
 
@@ -24,21 +26,57 @@ function create_system_user () {
 
 
 
-    echo "[create_system_user]: Checking if ${username} already exists"
-    if grep -Ewi  "${username}" /etc/passwd > /dev/null; then
-        echo "[create_user]: WARNING !! ${username} already exists. please suggest a unique username"
-        read -rp "Enter username to create : " input_username
-        
+    while :
+    do
+        echo "Enter Username to create : "
+        read input_username
+
         if [ -z "${input_username}" ]; then
-            echo "[]: WARNING !! username field is blank. Please enter a username."
+            echo "Input Username is blank"
         else
-            username="${input_username}"
+            echo "The entered username is ${input_username}"
+
+            if id -u "${input_username}" > /dev/null 2>&1; then
+                echo "[check_if_user_exists]: WARNING !! ${input_username} already exists, please suggest a unique username."
+                # exit 1        
+            else
+                echo "[check_if_user_exists]: ${input_username} does not exist in the system."
+                username="${input_username}"
+                echo "Creating ${username}"
+                break
+                # exit 0
+            fi
+
+
+        fi
+
+    done
+
+
+
+
+
+
+
+
+
+
+    # if check_if_user_exists "${username}"; then
+    # echo "[create_system_user]: Checking if ${username} already exists"
+    # if grep -Ewi  "${username}" /etc/passwd > /dev/null; then
+    #     echo "[create_user]: WARNING !! ${username} already exists. please suggest a unique username"
+    #     read -rp "Enter username to create : " input_username
         
-    else
-        read -rp "[create_user]: Enter a username. Default is ${suggested_username}" answer
-        name="${answer,,}"
-        username="${name:=$suggested_username}"
-    fi
+    #     if [ -z "${input_username}" ]; then
+    #         echo "[]: WARNING !! username field is blank. Please enter a username."
+    #     else
+    #         username="${input_username}"
+        
+    # else
+    #     read -rp "[create_user]: Enter a username. Default is ${suggested_username}" answer
+    #     name="${answer,,}"
+    #     username="${name:=$suggested_username}"
+    # fi
 
 
 

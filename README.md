@@ -37,7 +37,12 @@ This will add a new user with relevant samba permissions
 
 - lvm size
 - mount point
-
+- read an lvm partition in a new Linux system
+    1. vgscan - scan for volume groups
+    2. vgchange -ay {volume_group_name}
+    3. lvs - scan for logical volumes
+    4. create mountpoint
+    5. mount
 
 #### Backup
 - Backup directory
