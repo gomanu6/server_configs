@@ -32,6 +32,12 @@ This will add a new user with relevant samba permissions
 - Samba Admin Group
 - Check Samba Port in Firewall
 
+#### Firewall setup
+- reset firewall
+- deny incoming
+- allow outgoing
+- allow ssh
+- allow samba
 
 
 

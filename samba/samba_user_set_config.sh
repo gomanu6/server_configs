@@ -42,7 +42,7 @@ function samba_user_set_config () {
             echo "[samba_user_set_config]: Samba Config File exists....Making a backup"
         
         
-            if cp -v "${samba_global_config_file}" "${samba_global_config_file}.backup.$(date +%Y_%m_%d)"; then
+            if cp -v "${samba_global_config_file}" "${samba_config_backups}${samba_global_config_file}.backup.$(date +%Y%m%d_%H%M%S)"; then
                 echo "[samba_user_set_config]: Backup successful of Global Samba Config file"
 
 

@@ -1,20 +1,21 @@
 #!/bin/bash
 
+function custom_samba_config () {
 
 
-echo "[global_samba_config]: Creating Global Samba Config file"
-    tee -a "$samba_config_file" > /dev/null << EOF
+echo "[global_samba_config]: Creating Custom Global Samba Config file"
+    tee -a "${samba_global_config_file}" > /dev/null << EOF
 [global]
-    workgroup = $workgroup
-    netbios name = $netbios_name
-    server string = $server_string
-    log file = $samba_log_file
-    max log size = $max_log_size
-    logging = $logging
-    panic action = $panic_action
+    workgroup = ${workgroup}
+    netbios name = ${netbios_name}
+    server string = ${server_string}
+    log file = ${samba_log_file}
+    max log size = ${max_log_size}
+    logging = ${logging}
+    panic action = ${panic_action}
 
 # ====== AUTHENTICATION =======
-    server role = $standalone_server
+    server role = ${server_role}
     obey pam restrictions = yes
     unix password sync = yes
     passwd program = /usr/bin/passwd %u
@@ -25,8 +26,9 @@ echo "[global_samba_config]: Creating Global Samba Config file"
 # ===== MISC =======
     usershare allow guests = yes
 
-    name resolve order = bcast host
+    name resolve order = ${name_resolve_order}
 
 # ======= SHARES ======
 
 EOF
+}

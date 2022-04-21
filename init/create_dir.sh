@@ -8,16 +8,16 @@ function create_dir () {
 
 
 
-    echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: Checking if ${2} directory exists." 
+    echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: Checking if ${dir_type} directory exists." 
     if [ -d "${dir_to_create}" ]; then
-        echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: ${2} Directory exists" 
+        echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: ${dir_type} Directory exists" 
     else
-        echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: ${2} Directory does not exist. Creating it"
+        echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: ${dir_type} Directory does not exist. Creating it"
 
         if mkdir -vp  "${dir_to_create}"; then
-            echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: ${2} Directory has been created"
+            echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: ${dir_type} Directory has been created"
         else
-            echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: WARNING !! Unable to create ${2} directory"
+            echo "[create_dir: $(date +%Y%m%d_%H%M%S)]: WARNING !! Unable to create ${dir_type} directory"
         fi
     fi
 
