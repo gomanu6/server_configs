@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function custom_samba_config () {
+function custom_global_samba_config () {
 
 
 echo "[global_samba_config]: Creating Custom Global Samba Config file"

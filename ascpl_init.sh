@@ -5,7 +5,9 @@
 . ./init/create_file.sh
 . ./init/create_group.sh
 . ./init/create_system_user.sh
-. ./samba/global_samba_config.sh
+. ./samba/backup_global_samba_config.sh
+. ./samba/custom_global_samba_config.sh
+. ./samba/samba_user_enable.sh
 
 # Create directory for config
 create_dir "${config_dir}" "Config"
@@ -74,29 +76,18 @@ create_dir "${samba_config_backups}" "Samba Config Backups"
 
 
 # backup Global samba config file
-if [ -f "${samba_global_config_file}" ]; then
-    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Samba Global Config file exists. Making a backup"
+backup_global_samba_config | tee -a "${init_log_file}"
 
-    if cp -v "${samba_global_config_file}" "${samba_config_backups}${samba_global_config_file}.backup.$(date +%Y%m%d_%H%M%S)"; then
-        echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Backup successful of Global Samba Config file"
-        
 
-    else
-        echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: WARNING !! Unable to Backup Global Samba Config file ... Aborting"
-        
-    fi
 
+# Create Custom Global Samba Config
+if custom_global_samba_config; then
+    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Custom Config for Samba Successfully created"  | tee -a "${init_log_file}"
 else
-    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: WARNING !!Samba Global Config file does not exist"
+    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: WARNING !! Unable to create Custom Config for Samba." | tee -a "${init_log_file}"
 
 fi
 
 
-
-# Create Custom GLobal Samba Config
-if custom_samba_config; then
-    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Custom Config for Samba Successfully created"
-else
-    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: WARNING !! Unable to create Custom Config for Samba."
-
-fi
+# enable default system user for samba
+samba_user_enable "${default_system_user}" "${default_system_user_password}"  | tee -a "${init_log_file}"
