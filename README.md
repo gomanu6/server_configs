@@ -33,6 +33,30 @@ This will add a new user with relevant samba permissions
 - Check Samba Port in Firewall
 
 
+
+
+
+#### User manipulation
+- useradd
+    - --home DIR = path to home dir
+    - --shell /bin/shell = path to shell
+    -c = comment
+    -G = supplementary groups
+    - --password $password = encrypted password, as returned by crypt(3)
+
+- usermod
+    -a = append user to supplementary group
+    -G = supplementary groups
+    -c = comment
+    -d = new home directory
+    -m = move contents of home dir to new home dir
+    -s = name of new login shell
+    -l = lock
+    -u = unlock
+
+
+
+
 #### LVM
 
 - lvm size
