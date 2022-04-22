@@ -65,7 +65,7 @@ This will add a new user with relevant samba permissions
 
 
 #### LVM
-
+- Volume Group
 - lvm size
 - mount point
 - read an lvm partition in a new Linux system
