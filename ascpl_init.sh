@@ -9,6 +9,7 @@
 . ./samba/custom_global_samba_config.sh
 . ./samba/samba_user_enable.sh
 
+echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Beginning Init tasks"
 # Create directory for config
 create_dir "${config_dir}" "Config"
 
@@ -44,14 +45,23 @@ create_system_user "${default_sftp_user}" "${default_sftp_user_password}" "${sys
 
 # add system user to samba admin group
 if usermod -a -G "${default_samba_admin_group}" "${default_system_user}"; then
-    echo "[ascpl_init]: Added ${default_system_user} to ${default_samba_admin_group}."  | tee -a "${init_log_file}"
+    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Added ${default_system_user} to ${default_samba_admin_group}."  | tee -a "${init_log_file}"
 else
-    echo "[ascpl_init]: WARNING !! Unable to Add ${default_system_user} to ${default_samba_admin_group}."  | tee -a "${init_log_file}"
+    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: WARNING !! Unable to Add ${default_system_user} to ${default_samba_admin_group}."  | tee -a "${init_log_file}"
 if
 
 
 # create file for active users
 create_file "${active_users}" "Active Users" | tee -a "${init_log_file}"
+
+# Set Static IP
+if set_static_ip; then
+    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Static IP has been set"
+else
+    echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: WARNING !! Unable to set Static IP."
+
+fi
+
 
 
 # SSH port
@@ -91,3 +101,4 @@ fi
 
 # enable default system user for samba
 samba_user_enable "${default_system_user}" "${default_system_user_password}"  | tee -a "${init_log_file}"
+
