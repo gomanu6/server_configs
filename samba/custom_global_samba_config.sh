@@ -30,5 +30,7 @@ echo "[global_samba_config]: Creating Custom Global Samba Config file"
 
 # ======= SHARES ======
 
+# This file has been created automatically by custom_global_samba_config
+# $(date)
 EOF
 }

@@ -49,7 +49,7 @@ function create_system_user () {
 
     local user_home_dir="${base_home_dir}${username}"
    
-    if useradd --home "${user_home_dir}" --shell /usr/sbin/nologin "${append_groups}" "${username}"; then
+    if useradd --home "${user_home_dir}" --shell "${user_shell}" "${append_groups}" "${username}"; then
         echo "[create_system_user: $(date +%Y%m%d_%H%M%S)]: successfully added ${username} to the system"
 
         if echo "$username:$password" | chpasswd; then

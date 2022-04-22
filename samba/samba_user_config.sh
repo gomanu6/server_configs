@@ -6,7 +6,7 @@ function samba_user_config () {
 
     # imported variables
     local samba_user_config_file="${samba_users_config_dir}${username}.conf"
-    local new_user_data_dir="${new_user_data_parent_dir}${username}/"
+    local new_user_data_dir="${base_home_dir}${username}/"
 
 
 

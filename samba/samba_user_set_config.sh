@@ -8,9 +8,9 @@ function samba_user_set_config () {
 
 
     # imported variables
-    local new_user_data_dir="${new_user_data_parent_dir}${username}/"
-    local smb_users_group="${samba_users_group}"
-    local smb_admins_group="${smb_admins_group}"
+    local new_user_data_dir="${base_home_dir}${username}/"
+    local smb_users_group="${default_samba_users_group}"
+    local smb_admins_group="${default_samba_admin_group}"
     local samba_global_config_file="${samba_global_config_file}"
     local samba_users_config_dir="${samba_users_config_dir}"
     local samba_user_config_file="${samba_users_config_dir}${username}.conf"
@@ -42,7 +42,7 @@ function samba_user_set_config () {
             echo "[samba_user_set_config]: Samba Config File exists....Making a backup"
         
         
-            if cp -v "${samba_global_config_file}" "${samba_config_backups}${samba_global_config_file}.backup.$(date +%Y%m%d_%H%M%S)"; then
+            if cp -v "${samba_global_config_file}" "${samba_config_backups}${samba_global_config_file}.backup.${backup_stamp}"; then
                 echo "[samba_user_set_config]: Backup successful of Global Samba Config file"
 
 
@@ -56,7 +56,7 @@ function samba_user_set_config () {
 
                 else
                     echo "[samba_user_set_config]: WARNING !! Unable to include link in smb.conf"
-                    exit 1
+                    #exit 1
                 fi
 
             else

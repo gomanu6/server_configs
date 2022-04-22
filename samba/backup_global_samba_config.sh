@@ -26,7 +26,7 @@ function backup_global_samba_config () {
     if [ -f "${samba_global_config_file}" ]; then
         echo "[backup_global_samba_config: $(date +%Y%m%d_%H%M%S)]: Samba Global Config file exists. Making a backup"
 
-        if cp -v "${samba_global_config_file}" "${samba_config_backups_dir}${samba_global_config_file}.backup.$(date +%Y%m%d_%H%M%S)"; then
+        if cp -v "${samba_global_config_file}" "${samba_config_backups_dir}${samba_global_config_file}.backup.${backup_stamp}"; then
             echo "[backup_global_samba_config: $(date +%Y%m%d_%H%M%S)]: Backup successful of Global Samba Config file"
                 
 

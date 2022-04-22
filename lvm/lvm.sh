@@ -15,8 +15,9 @@ function create_lvm_partition () {
     local lv_path="/dev/${vg_name}/${lv_name}"
     local lv_size="${default_lvm_size}"
     local volume_label="${username}"
+    local fstab_backups_dir="${config_backups_dir_fstab}"
 
-    local new_user_data_dir="${new_user_data_parent_dir}${username}" 
+    local new_user_data_dir="${base_home_dir}${username}" 
 
     
     if [ -d "${vg_path}" ]; then
@@ -29,7 +30,7 @@ function create_lvm_partition () {
                 echo "[create_lvm]: Partioning new LV"
 
                 
-                if cp -v "${fstab_file}" "${fstab_file}.backup.${day_string}"; then
+                if cp -v "${fstab_file}" "${fstab_backups_dir}fstab.backup.${backup_stamp}"; then
                     echo "[create_lvm]: Created Backup of fstab file"
 
 

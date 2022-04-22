@@ -5,22 +5,25 @@
 . ./init/create_file.sh
 . ./init/create_group.sh
 . ./init/create_system_user.sh
+. ./network/set_static_ip.sh
 . ./samba/backup_global_samba_config.sh
 . ./samba/custom_global_samba_config.sh
 . ./samba/samba_user_enable.sh
 
-echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Beginning Init tasks"
-# Create directory for config
-create_dir "${config_dir}" "Config"
-
-# create directory for log File
-create_dir "${log_dir}" "Log"
 
 # Create log File
 create_file "${init_log_file}" "Log"
 
+echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Beginning Init tasks" | tee -a "${init_log_file}"
+# Create directory for config
+create_dir "${config_dir}" "Config" | tee -a "${init_log_file}"
+
+# create directory for log File
+create_dir "${log_dir}" "Log" | tee -a "${init_log_file}"
+
+
 # Create log File
-create_file "${log_file}" "Log"
+create_file "${log_file}" "Log" | tee -a "${init_log_file}"
 
 # create Samba Admins Group
 create_group "${default_samba_admin_group}" | tee -a "${init_log_file}"
@@ -34,13 +37,22 @@ create_group "${default_sftp_admin_group}" | tee -a "${init_log_file}"
 # create SFTP users Group
 create_group "${default_sftp_users_group}" | tee -a "${init_log_file}"
 
+# create samba user config directory
+create_dir "${samba_users_config_dir}" "Samba Users Config"
+
+# create samba config backup directory
+create_dir "${samba_config_backups_dir}" "Samba Config Backups"
+
+# create file for active users
+create_file "${active_users}" "Active Users" | tee -a "${init_log_file}"
+
 
 # create default user
 create_system_user "${default_system_user}" "${default_system_user_password}" "${system_user_shell}" "${default_system_user_groups}"  | tee -a "${init_log_file}"
 
 
 # create sftp user
-create_system_user "${default_sftp_user}" "${default_sftp_user_password}" "${system_user_shell}" "${default_system_user_groups}"  | tee -a "${init_log_file}"
+create_system_user "${default_sftp_user}" "${default_sftp_user_password}" "${system_user_shell}" "${default_sftp_users_group}"  | tee -a "${init_log_file}"
 
 
 # add system user to samba admin group
@@ -51,8 +63,6 @@ else
 if
 
 
-# create file for active users
-create_file "${active_users}" "Active Users" | tee -a "${init_log_file}"
 
 # Set Static IP
 if set_static_ip; then
@@ -64,6 +74,7 @@ fi
 
 
 # SSH port
+cp -v "${ssh_config_file}" "${ssh_config_file}.backup.${backup_stamp}"
 echo "Port ${default_ssh_port}" >> "${ssh_config_file}"
 if systemctl restart sshd; then
     echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Restarted SSH Service"  | tee -a "${init_log_file}"
@@ -77,11 +88,6 @@ ufw allow "${default_ssh_port}"
 ufw allow samba
 ufw enable
 
-# create samba user config directory
-create_dir "${samba_users_config_dir}" "Samba Users Config"
-
-# create samba config backup directory
-create_dir "${samba_config_backups}" "Samba Config Backups"
 
 
 # backup Global samba config file
@@ -101,3 +107,8 @@ fi
 # enable default system user for samba
 samba_user_enable "${default_system_user}" "${default_system_user_password}"  | tee -a "${init_log_file}"
 
+# restart Samba
+
+
+
+exit 0

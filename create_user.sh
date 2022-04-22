@@ -1,11 +1,12 @@
 #!/bin/bash
 
-. ./settings.config
+. ./ascpl.config
 . ./user/system_user_add.sh
 . ./mount/create_mountpoint.sh
 . ./samba/samba_user_enable.sh
 . ./samba/samba_user_set_config.sh
 . ./samba/samba_user_config.sh
+. ./lvm/lvm.sh
 . ./backup/new_user_backup_config.sh
 
 
@@ -19,15 +20,58 @@ if [ "$(id -u)" -eq 0 ]; then
 
     suggested_username="${first_name_lower}_${last_name_lower}"
 
-    if grep -Ewi  "${suggested_username}" /etc/passwd > /dev/null; then
-        echo "[create_user]: WARNING !! The suggested Username ${suggested_username} already exists. please suggest a unique username"
-        read -rp "Enter username to create : " input_username
-        username="${input_username}"
-    else
+
+    while :
+    do
+
         read -rp "[create_user]: Enter a username. Default is ${suggested_username}" answer
         name="${answer,,}"
-        username="${name:=$suggested_username}"
-    fi
+        check_username="${name:=$suggested_username}"
+
+
+        if [ -z "${check_username}" ]; then
+            echo "[create_system_user: $(date +%Y%m%d_%H%M%S)]: WARNING !! Input Username is blank"
+        else
+            echo "[create_system_user: $(date +%Y%m%d_%H%M%S)]: The entered username is ${check_username}"
+
+            if id -u "${check_username}" > /dev/null 2>&1; then
+                echo "[create_system_user: $(date +%Y%m%d_%H%M%S)]: WARNING !! ${check_username} already exists, please suggest a unique username."
+                # exit 1        
+            else
+                echo "[create_system_user: $(date +%Y%m%d_%H%M%S)]: ${check_username} does not exist in the system."
+                username="${check_username}"
+                #echo "Creating ${username}"
+                break
+                # exit 0
+            fi
+
+
+        fi
+
+    done
+
+    # if id -u "${suggested_username}" > /dev/null 2>&1; then
+    #     echo "[create_system_user: $(date +%Y%m%d_%H%M%S)]: WARNING !! ${input_username} already exists, please suggest a unique username."
+    #     read -rp "Enter username to create : " input_username
+    #     username="${input_username}"
+    #     # exit 1        
+    # else
+    #     echo "[create_system_user: $(date +%Y%m%d_%H%M%S)]: ${input_username} does not exist in the system."
+    #     username="${input_username}"
+    #     #echo "Creating ${username}"
+    #     break
+    #     # exit 0
+    # fi
+
+    # if grep -Ewi  "${suggested_username}" /etc/passwd > /dev/null; then
+    #     echo "[create_user]: WARNING !! The suggested Username ${suggested_username} already exists. please suggest a unique username"
+    #     read -rp "Enter username to create : " input_username
+    #     username="${input_username}"
+    # else
+    #     read -rp "[create_user]: Enter a username. Default is ${suggested_username}" answer
+    #     name="${answer,,}"
+    #     username="${name:=$suggested_username}"
+    # fi
 
 
     # echo "${first_name}" | awk '{print tolower($0)}'

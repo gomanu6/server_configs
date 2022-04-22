@@ -27,11 +27,11 @@ network:
 # $(date)
 EOF
 
-if netplan apply; then
-    echo "[set_static_ip $(date +%Y%m%d_%H%M%S)]: IP Address has been set to ${ip_address}"
-else
-    echo "[set_static_ip $(date +%Y%m%d_%H%M%S)]: WARNING !! IP Address has NOT been set."
-fi
+  if netplan apply; then
+      echo "[set_static_ip $(date +%Y%m%d_%H%M%S)]: IP Address has been set to ${ip_address}"
+  else
+      echo "[set_static_ip $(date +%Y%m%d_%H%M%S)]: WARNING !! IP Address has NOT been set."
+  fi
 
 
     
