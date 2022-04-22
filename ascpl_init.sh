@@ -59,7 +59,6 @@ if set_static_ip; then
     echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Static IP has been set"
 else
     echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: WARNING !! Unable to set Static IP."
-
 fi
 
 
