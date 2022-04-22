@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ../settings.config
+. ../ascpl.config
 . ./rsync_daily_backup.sh
 
 
