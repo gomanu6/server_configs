@@ -19,8 +19,8 @@ while IFS= read -r user; do
 
     source="${source_base}${user_folder_name}/"
     
-    log_file_base_user="${log_file_base}${user_folder_name}/"
-    log_file="${log_file_base_user}${backup_date}_${backup_time}.txt"
+    log_file_base_user="${log_files_base_daily}${user_folder_name}/"
+    log_file="${log_file_base_user}${backup_date}_${backup_time}.log"
 
     user_dest="${dest_base_daily}${user_folder_name}/"
     dest="${user_dest}${backup_date}"

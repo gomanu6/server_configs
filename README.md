@@ -9,6 +9,7 @@ This will add a new user with relevant samba permissions
 - ssh
 - samba
 - git
+- duck
 - firewall
 - fail2ban
     - enable sshd jail
