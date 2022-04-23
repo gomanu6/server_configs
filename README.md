@@ -20,6 +20,17 @@ This will add a new user with relevant samba permissions
     -v = verbose
     -q = quiet
 
+#### Init Tasks 
+- install pre-requisites
+- set Timezone
+- set bash rc defaults
+- duck dns
+- ssh port
+- sftp setup
+- default groups
+- 
+
+
 #### SSH Setup
 - port
 - set port in firewall
