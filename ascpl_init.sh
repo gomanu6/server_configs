@@ -48,11 +48,20 @@ create_file "${active_users}" "Active Users" | tee -a "${init_log_file}"
 
 
 # create default user
-create_system_user "${default_system_user}" "${default_system_user_password}" "${system_user_shell}" "${default_system_user_groups}"  | tee -a "${init_log_file}"
+create_system_user "${default_system_user}" "${default_system_user_password}" "${system_user_shell}" | tee -a "${init_log_file}"
+
 
 
 # create sftp user
-create_system_user "${default_sftp_user}" "${default_sftp_user_password}" "${system_user_shell}" "${default_sftp_users_group}"  | tee -a "${init_log_file}"
+create_system_user "${default_sftp_user}" "${default_sftp_user_password}" "${system_user_shell}"  | tee -a "${init_log_file}"
+
+# add sftp user to sftp admins group
+if usermod -aG "${default_sftp_admin_group}" "${default_sftp_user}"; then
+    echo "[create_system_user: $(date +%Y%m%d_%H%M%S)]: successfully added ${username} to ${default_samba_admin_group}"
+else
+    echo "[create_system_user: $(date +%Y%m%d_%H%M%S)]:WARNING !! Unable to add ${username} to ${default_samba_admin_group}"
+
+fi
 
 
 # add system user to samba admin group

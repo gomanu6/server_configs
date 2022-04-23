@@ -26,7 +26,7 @@ function create_lvm_partition () {
         if lvcreate -v -L "${lv_size}" -n "${lv_name}" "${vg_name}"; then
             echo "[create_lvm]: created new LV '${lv_name}'"
 
-            if [ mkfs.ext4 -v -L "${volume_label}" "${lv_path}" ]; then
+            if mkfs.ext4 -v -L "${volume_label}" "${lv_path}"; then
                 echo "[create_lvm]: Partioning new LV"
 
                 
