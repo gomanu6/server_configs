@@ -89,13 +89,23 @@ if systemctl restart sshd; then
     echo "[ascpl_init: $(date +%Y%m%d_%H%M%S)]: Restarted SSH Service"  | tee -a "${init_log_file}"
 
 
+
 # Set firewall rules
 ufw reset
 ufw default deny incoming
 ufw default allow outgoing
 ufw allow "${default_ssh_port}"
 ufw allow samba
+
+# change value of IPT_MODULES in /etc/default/ufw
+
+# OR echo 1 > /proc/sys/net/netfilter/nf_conntrack_helper
+
+
+
 ufw enable
+ufw reload
+
 
 
 

@@ -35,6 +35,15 @@ This will add a new user with relevant samba permissions
 - mount Backup drive and add entry in fstab file
 - create directories for backups, daily and hourly
 - Create Volume Group for Users Directory
+- change value of IPT_MODULES entry for samba in ufw 
+    - /etc/default/ufw
+    - IPT_MODULES="nf_conntrack_ftp nf_nat_ftp nf_conntrack_irc nf_nat_irc"
+    - IPT_MODULES="nf_conntrack_ftp nf_nat_ftp nf_conntrack_irc nf_nat_irc nf_conntrack_netbios_ns"
+    - sudo ufw reload
+
+    OR
+
+    - echo 1 > /proc/sys/net/netfilter/nf_conntrack_helper
 
 
 #### SSH Setup
@@ -56,6 +65,8 @@ This will add a new user with relevant samba permissions
 - allow outgoing
 - allow ssh
 - allow samba
+- log file /var/log/ufw.log
+- tail -f /var/log/ufw.log to check if something is being blocked
 
 
 
