@@ -6,6 +6,7 @@ This will add a new user with relevant samba permissions
 
 #### Prerequisites
 
+- set timezone
 - ssh
 - samba
 - git
@@ -13,7 +14,6 @@ This will add a new user with relevant samba permissions
 - firewall
 - fail2ban
     - enable sshd jail
-- set timezone
 - zip
     -9 = max compression level
     -r = recursive
@@ -21,13 +21,19 @@ This will add a new user with relevant samba permissions
     -q = quiet
 
 #### Init Tasks 
-- install pre-requisites
 - set Timezone
+    - timedatectl set-timezone Asia/Kolkata
+- install pre-requisites
 - set bash rc defaults
 - duck dns
 - ssh port
 - sftp setup
-- default groups
+- create directories for system config
+- create backups of ssh, samba and fstab config files
+- default groups for sftp samba
+- Partition and Format Backup Drive
+- mount Backup drive and add entry in fstab file
+- create directories for backups, daily and hourly
 - 
 
 
