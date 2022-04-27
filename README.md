@@ -34,7 +34,7 @@ This will add a new user with relevant samba permissions
 - Partition and Format Backup Drive
 - mount Backup drive and add entry in fstab file
 - create directories for backups, daily and hourly
-- 
+- Create Volume Group for Users Directory
 
 
 #### SSH Setup
