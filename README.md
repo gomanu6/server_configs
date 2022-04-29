@@ -134,3 +134,16 @@ This will add a new user with relevant samba permissions
 
 rsync_daily_backup $user $source $dest [$link_dest]
 
+#### Initial Volume Group
+
+
+
+
+#### Create System Users
+- input username
+- create mountpoint
+- create user
+- create lvm and mount lvm
+- enable user in Samba
+- update samba configuration
+- set backup config and script
