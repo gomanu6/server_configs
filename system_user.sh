@@ -3,7 +3,7 @@
 
 . ./system_user.config
 
-
+day=$(date +%Y%m%d)
 backup_stamp=$(date +%Y%m%d_%H%M%S)
 
 
@@ -258,9 +258,26 @@ EOF
 
     fi
 
+    
+    # Creating Backup Destinations
+    user_daily_backup_dir="${backups_base_dir}${username}/daily/"
 
 
+    if [ -d "${user_daily_backup_dir}" ]; then
+            echo "[new_user_backup]: backup destination for ${username} exists"
 
+        else
+            echo "[new_user_backup]: backup destination for ${username} does not exist. Creating it now."
+
+            if mkdir -vp "${user_daily_backup_dir}"; then
+                echo "[new_user_backup]: The backup destination for ${username} has been created"
+                
+            else
+                echo "[new_user_backup]: WARNING !! Unable to create the backup destination for ${username}"
+
+            fi
+
+        fi
 
 
 
