@@ -69,8 +69,10 @@ function create_lvm_partition () {
 
         local new_fstab_entry="UUID=${UUID}  ${new_user_data_dir}    ext4    defaults    0   0"
 
+        echo 
         echo "# fstab entry for ${username} at ${new_user_data_dir}" | tee -a "${fstab_file}"
         echo "${new_fstab_entry}" | tee -a "${fstab_file}"
+        echo
 
         if mount -v "${lv_path}" "${new_user_data_dir}"; then
             echo "[create_lvm]: LVM for User Directory has been mounted successfully"
