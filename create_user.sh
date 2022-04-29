@@ -24,7 +24,7 @@ if [ "$(id -u)" -eq 0 ]; then
     while :
     do
 
-        read -rp "[create_user]: Enter a username. Default is ${suggested_username}" answer
+        read -rp "[create_user]: Enter a username. Default is ${suggested_username} :>> " answer
         name="${answer,,}"
         check_username="${name:=$suggested_username}"
 

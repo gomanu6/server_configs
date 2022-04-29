@@ -28,35 +28,7 @@ function create_lvm_partition () {
 
             if mkfs.ext4 -v -L "${volume_label}" "${lv_path}"; then
                 echo "[create_lvm]: Partioning new LV"
-
-                
-                if cp -v "${fstab_file}" "${fstab_backups_dir}fstab.backup.${backup_stamp}"; then
-                    echo "[create_lvm]: Created Backup of fstab file"
-
-
-                    local UUID="$(sudo blkid -s UUID -o value ${lv_path})"
-
-                    local new_fstab_entry="UUID=${UUID}  ${new_user_data_dir}    ext4    defaults    0   0"
-
-                    echo "${new_fstab_entry}" | tee -a "${fstab_file}"
-
-                    if mount -v "${lv_path}" "${new_user_data_dir}"; then
-                        echo "[create_lvm]: LVM for User Directory has been mounted successfully"
-                        
-                        echo "[create_lvm]: Exiting to [create_user]"
-
-                    else
-                        echo "[create_lvm]: WARNING !! Unable to mount User LVM"
-                    fi
-
-
-
-                else
-                    echo "[create_lvm]: WARNING!! Unable to create Backup of fstab file. Exiting"
-                    exit 1
-                fi
-
-              
+                             
             else
                 echo "[create_lvm]: WARNING Problem Partioning new LV"
                 exit 1
@@ -74,6 +46,47 @@ function create_lvm_partition () {
 
     fi
     
+
+    if [ -d "${fstab_backups_dir}" ]; then
+        echo "[create_lvm]: fstab Backup dir exists"
+    else
+        echo "[create_lvm]: fstab backups dir does not exist"
+
+        if mkdir -vp "${fstab_backups_dir}"; then
+            echo "[create_lvm]: created Backups dir for fstab"
+        else
+            echo "[create_lvm]: Unable to create backups dir for fstab"
+        fi
+    fi
+
+
+
+    if cp -v "${fstab_file}" "${fstab_backups_dir}fstab.backup.${backup_stamp}"; then
+            echo "[create_lvm]: Created Backup of fstab file"
+
+
+        local UUID="$(sudo blkid -s UUID -o value ${lv_path})"
+
+        local new_fstab_entry="UUID=${UUID}  ${new_user_data_dir}    ext4    defaults    0   0"
+
+        echo "${new_fstab_entry}" | tee -a "${fstab_file}"
+
+        if mount -v "${lv_path}" "${new_user_data_dir}"; then
+            echo "[create_lvm]: LVM for User Directory has been mounted successfully"
+            
+            echo "[create_lvm]: Exiting to [create_user]"
+
+        else
+            echo "[create_lvm]: WARNING !! Unable to mount User LVM"
+        fi
+
+
+
+    else
+        echo "[create_lvm]: WARNING!! Unable to create Backup of fstab file. Exiting"
+        exit 1
+    fi
+
 
 
 }
