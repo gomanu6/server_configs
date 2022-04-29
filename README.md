@@ -103,6 +103,11 @@ This will add a new user with relevant samba permissions
     3. lvs - scan for logical volumes
     4. create mountpoint
     5. mount
+- vgextend vg_name /dev/sda2
+- lvextend -L50G /dev/vg_name/lv_name
+    50G = new size
+    -L+50G = extend by 50G
+- resize2fs /dev/vg_name/lv_name
 
 #### Backup
 - Backup directory
