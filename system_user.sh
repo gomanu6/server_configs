@@ -11,11 +11,6 @@ echo "[$(date +%Y%m%d_%H%M)system_user]: Starting process to add new Samba user.
 if [ "$(id -u)" -eq 0 ]; then
     echo "[$(date +%Y%m%d_%H%M)system_user]: Root user detected"
 
-
-    
-
-
-
     read -rp "Enter First Name : " first_name
     read -rp "Enter Last Name : " last_name
 
@@ -58,6 +53,20 @@ if [ "$(id -u)" -eq 0 ]; then
 
     read -rp "Enter password for ${username} : " -s password
 
+    # Adding user to the system
+    if useradd --home "${users_dir}" --shell "${samba_users_shell}" -G "${samba_users_group}" "${username}"; then
+        echo "[$(date +%Y%m%d_%H%M)system_user]: successfully added ${username} to the system"
+
+        if echo "$username:$password" | chpasswd; then
+            echo "[$(date +%Y%m%d_%H%M)system_user]: Password has been set for ${username}"
+            echo "[$(date +%Y%m%d_%H%M)system_user]: User has been added to the system. Returning control to [create_user]"
+        fi
+
+
+    else
+        echo "[$(date +%Y%m%d_%H%M)system_user]: WARNING !! There was an error in adding ${username} to the system"
+        exit 1
+    fi
 
     users_dir="${users_base_dir}${username}"
 
@@ -99,20 +108,6 @@ if [ "$(id -u)" -eq 0 ]; then
     fi
 
 
-    # Adding user to the system
-    if useradd --home "${users_dir}" --shell "${samba_users_shell}" -G "${samba_users_group}" "${username}"; then
-        echo "[$(date +%Y%m%d_%H%M)system_user]: successfully added ${username} to the system"
-
-        if echo "$username:$password" | chpasswd; then
-            echo "[$(date +%Y%m%d_%H%M)system_user]: Password has been set for ${username}"
-            echo "[$(date +%Y%m%d_%H%M)system_user]: User has been added to the system. Returning control to [create_user]"
-        fi
-
-
-    else
-        echo "[$(date +%Y%m%d_%H%M)system_user]: WARNING !! There was an error in adding ${username} to the system"
-        exit 1
-    fi
 
 
     # Enabling user in Samba
@@ -281,39 +276,7 @@ EOF
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 else
     echo "[$(date +%Y%m%d_%H%M)system_user]: WARNING !! Only Root may make further changes, exiting"
     exit 1
 fi
-
-
-
-

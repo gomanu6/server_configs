@@ -9,6 +9,7 @@ This will add a new user with relevant samba permissions
 - set timezone
 - ssh
 - samba
+- acl
 - git
 - duck
 - firewall
