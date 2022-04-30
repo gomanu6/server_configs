@@ -59,6 +59,12 @@ This will add a new user with relevant samba permissions
 - Samba Users Group
 - Samba Admin Group
 - Check Samba Port in Firewall
+- samba ports
+    - 137/udp
+    - 138/udp
+    - 139/tcp
+    - 445/tcp
+    - 111/tcp
 
 #### Firewall setup
 - reset firewall

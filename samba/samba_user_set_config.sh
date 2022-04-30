@@ -45,8 +45,11 @@ function samba_user_set_config () {
             if cp -v "${samba_global_config_file}" "${samba_config_backups}${samba_global_config_file}.backup.$(date +%Y%m%d_%H%M%S)"; then
                 echo "[samba_user_set_config]: Backup successful of Global Samba Config file"
 
-
+                echo "[samba_user_set_config]: Adding config entry for ${username} in Global Samba Config file"
+                echo >> "${samba_global_config_file}"
+                echo "# Samba config for ${username}" >> "${samba_global_config_file}"
                 if echo "include = ${samba_user_config_file}" >> "${samba_global_config_file}"; then
+                    echo "# config for ${username} added by samba_user_set_config on $(date)" >> "${samba_global_config_file}"
 
                     echo "[samba_user_set_config]: Added link to Config file in smb.conf"
 
