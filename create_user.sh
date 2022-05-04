@@ -11,7 +11,7 @@
 
 
 if [ "$(id -u)" -eq 0 ]; then
-    echo "[create_user]: Root user detected"
+    echo "[create_user]: ${e_lggreen} Root ${e_no_colour} user detected"
     read -rp "Enter First Name : " first_name
     read -rp "Enter Last Name : " last_name
     
