@@ -17,8 +17,10 @@ function samba_user_config () {
     browsable = yes
     guest ok = yes
     read only = no
-    create mask = 2755
-    force create mask = 2755
+    create mask = 1755
+    force create mask = 1755
+    create mode = 1755
+    force create mode = 1755
 
 
 #This file has been created automatically by samba_user_config

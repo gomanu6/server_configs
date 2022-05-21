@@ -20,7 +20,7 @@ function create_mountpoint () {
             if chown -v "${username}:${samba_group}" "${new_user_data_dir}"; then
                 echo "[mountpoint]: Mount Point ownership changed"
 
-                if chmod -R -v 2755 "${new_user_data_dir}"; then
+                if chmod -R -v 1755 "${new_user_data_dir}"; then
                     echo "[mountpoint]: Mount Point permissions changed to $(stat -c $'\nOwner Name: %U, \nOwner Group Name: %G, \nMount Point: %m, \nPermission: %A (%a), \nFile Type: %F' ${new_user_data_dir})"
                                         
 
