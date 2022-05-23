@@ -1,7 +1,7 @@
 #!/bin/bash
 
 . ../ascpl.config
-. ./rsync_daily_backup.sh
+. ./rsync_backup.sh
 
 
 users_file="${users_to_backup}"
