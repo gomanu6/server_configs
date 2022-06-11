@@ -113,6 +113,7 @@ This will add a new user with relevant samba permissions
 - lvextend -L50G /dev/vg_name/lv_name
     50G = new size
     -L+50G = extend by 50G
+- e2fsck -f /dev/vg_name/lv_name
 - resize2fs /dev/vg_name/lv_name
 
 #### Backup

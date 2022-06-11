@@ -31,7 +31,7 @@ fi
 
 touch ${log_file}
 echo | tee -a ${log_file}
-echo "/---------BACKUP--->>--${user}--<<--------/" | tee -a ${log_file}
+echo "/---------BACKUP--FOR->>--${user}--<<--------/" | tee -a ${log_file}
 echo "Start Time: $(date)" | tee -a ${log_file}
 echo "----------------${user}--------------------" | tee -a ${log_file}
 
@@ -70,7 +70,7 @@ for i in {-1..-15}; do
 
     if [ -d "${date_folder_to_check}" ]; then
         link_dest="${date_folder_to_check}"
-        echo "[backup]: Found backup directory for ${user} dated ${date_folder_to_check}. --link-dest parameter has been set" | tee -a ${log_file}
+        echo "[backup]: Found last backup directory for ${user} dated ${date_folder_to_check}. --link-dest parameter has been set" | tee -a ${log_file}
         break
     fi
 
