@@ -52,7 +52,7 @@ ufw delete rule_number
     - ufw app update apache
 - Use the app rules
     - ufw allow 'Apache Secure'
-    
+
 
 [Apache dual Ports]
 title=Dual Port Apache Web Server
@@ -60,6 +60,31 @@ description=Apache Web Server config
 ports=80,443/tcp
 
 ufw allow Apache dual Ports
+
+
+#### Rate Limit
+- limit on the number of concurrent innbound connections
+- 6 or more connections in the last 30 seconds
+- allow reate limiting
+    - ufw limit ssh
+
+
+
+#### Logging and Monitoring
+
+- log is stored in 
+    - /var/log/ufw.log
+- control logging 
+    - ufw logging medium
+    - low, medium, high, full
+
+#### Testing
+- netcat
+    - opens socket connections between systems
+- nmap
+    - tests ports
+    - nmap -sT -p 80,443 192.168.0.12
+
 
 
 
