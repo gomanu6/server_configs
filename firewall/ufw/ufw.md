@@ -97,6 +97,7 @@ import pyufw as ufw
 - enable() // ufw.enable
 - disable()
 - reset()
+    - ufw.reset(force=True) // answers in yes any confirmations
 - reload()
 - set_logging('on')
     - on, off, low, medium, high, full
@@ -111,7 +112,7 @@ import pyufw as ufw
     - default()
         - takes 3 parameters for incoming, outgoing and routing
         - the values of the parameters can be allow, deny or reject
-        - ufw.default(incoming='deny', outgoing='allow', routed='reject')
+        - ufw.default(incoming='deny', outgoing='allow', routed='reject', force=True)
     - add()
         - accepts a string value to represent the text of the rule
         - optional second argument of a number to represent the place of the rule in the ufw rule list
@@ -136,8 +137,12 @@ import pyufw as ufw
         - fwRules = ufw.get_rules()
         for key, value in fwRules.items():
             print(str(key) + " => " + value)
+- show_listening()
+    - list the listening ports and apps
+    - fwListen = []
+    - fwListen = ufw.show_listening()
         
-        
+
 
 
 
