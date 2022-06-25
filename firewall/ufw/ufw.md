@@ -19,6 +19,7 @@ restarts the firewall with all the rules in place
 ufw reset
 removes any custom configs and restores to factory defaults
 
+#### Default Rules
 ufw default deny incoming
 ufw default allow outgoing
 
