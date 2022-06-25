@@ -28,5 +28,38 @@ ufw default allow outgoing
 ufw allow|deny in|out port[/protocol] from any|ipaddress to any|ipaddress|port_no comment 'Comment'
 if in|out is missing it creates a bi-directional rules that allows in bound and outbound traffic
 
+ufw deny out from any to ipaddress
+ufw allow from ipaddress to port no
+
+
 ufw delete deny 53
 ufw delete rule_number
+
+
+#### Application Profile
+- groups application and port information together
+- uses INI file structure
+- each section of the file contains a series of name value pair that represent a config item and its setting
+- application profiles are stored in 
+    - /etc/ufw/applications.d
+- view list of available applications
+    - ufw app list
+- details of app profile
+    -ufw app info samba
+    - ufw app info 'Apache Secure'
+- update the profiles
+    - ufw app update app_name
+    - ufw app update apache
+- Use the app rules
+    - ufw allow 'Apache Secure'
+    
+
+[Apache dual Ports]
+title=Dual Port Apache Web Server
+description=Apache Web Server config
+ports=80,443/tcp
+
+ufw allow Apache dual Ports
+
+
+
