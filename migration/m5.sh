@@ -1,0 +1,1 @@
+declare -a folders=( angular cloud cwm db dm devops excel finance git health infosec java js learning linux misc mobile networking next node photoshop powerpoint python react seo stacks ui vue web3 win wp )

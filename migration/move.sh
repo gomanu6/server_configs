@@ -5,17 +5,18 @@
 
 function move () {
 
+
     local src_directory=$1
     local dst_directory=$2
 
-    echo "checking validity of source directory"
+    echo "checking validity of source directory ${src_directory}"
     if [ -d "${src_directory}" ]; then
         echo "Source is a valid directory"
         
-        echo "checking if Destination exists"
+        echo "checking if Destination exists ${dst_directory}"
         if [ -d "${dst_directory}" ]; then
             echo "Destination exists"
-
+            
             echo "Moving recursively"
 
             for dir in ${src_directory}/*; do
