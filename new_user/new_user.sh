@@ -53,26 +53,27 @@ fi
 
 function add_new_user () {
 
-    echo "-----------Running add_new_user ------------"
-    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Starting process to add new user."
 
     firstname=$1
     lastname=$2
     username=$3
     password=$4
 
+    echo "-----------Running add_new_user for ${username}------------"
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Starting process to add ${username}"
+    
     local users_dir="${users_base_dir}${username}"
 
 
     # Adding user to the system
-    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Adding Username to the system."
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Adding ${username} to the system."
     if useradd --home "${users_dir}" --shell "${samba_users_shell}" -G "${samba_users_group}" "${username}"; then
         echo "[$(date +%Y%m%d_%H%M): add_new_user]: successfully added ${username} to the system"
 
 
         if echo "$username:$password" | chpasswd; then
             echo "[$(date +%Y%m%d_%H%M): add_new_user]: Password has been set for ${username}"
-            echo "[$(date +%Y%m%d_%H%M): add_new_user]: User has been added to the system."
+            echo "[$(date +%Y%m%d_%H%M): add_new_user]: ${username} has been added to the system."
         fi
 
 
@@ -123,7 +124,11 @@ function add_new_user () {
 
 
     # Enabling user in Samba
+
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: adding Samba password for ${username}"
     if (echo "$password"; echo "$password") | smbpasswd -s -a "${username}"; then
+        
+        echo "[$(date +%Y%m%d_%H%M): add_new_user]: Enabling ${username} in samba"
 
         if smbpasswd -e "${username}"; then
             echo "[$(date +%Y%m%d_%H%M): add_new_user]: The User can now login through Samba"
@@ -293,7 +298,7 @@ EOF
 
     # Changing Mountpoint Permissions
     if chown -R -v "${username}:${samba_users_group}" "${users_dir}"; then
-                    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Mount Point ownership changed"
+        echo "[$(date +%Y%m%d_%H%M): add_new_user]: Mount Point ownership changed"
 
         if chmod -R -v 3755 "${users_dir}"; then
             echo "[$(date +%Y%m%d_%H%M): add_new_user]: Mount Point permissions changed to $(stat -c $'\nOwner Name: %U, \nOwner Group Name: %G, \nMount Point: %m, \nPermission: %A (%a), \nFile Type: %F' ${users_dir})"
@@ -309,7 +314,7 @@ EOF
         # exit 1
     fi
 
-    echo "[$(date +%Y%m%d_%H%M): add_new_user]: End of add_new_user... bye ... bye"
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: ${username} added successfully. \n End of add_new_user... bye ... bye"
 
 }
 
