@@ -177,6 +177,8 @@ function add_new_user () {
     read only = no
     create mask = 3755
     force create mask = 3755
+    create mode = 3755
+    force create mode = 3755
 
 
 # This file has been created automatically by add_new_user
