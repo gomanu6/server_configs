@@ -13,29 +13,48 @@
 # chmod users directory (Mounted Partition)
 
 
-. ./new_user_settings.config
+. ./user_settings.config
 
 
 day=$(date +%Y%m%d)
 backup_stamp=$(date +%Y%m%d_%H%M%S)
 
+# Log Directory
+echo "[$(date +%Y%m%d_%H%M): add_new_user]: Checking if Log Directory exists."
+if [ -d "${log_file_dir}" ]; then
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Log Directory exists."
+else
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Log Directory doesnt exist."
+    if mkdir -vp "${log_file_dir}"; then
+        echo "[$(date +%Y%m%d_%H%M): add_new_user]: Log Directory Created."
+    else
+        echo "[$(date +%Y%m%d_%H%M): add_new_user]: Problem creating Log Directory"
+    fi
+fi
 
+
+# Log File
+echo "[$(date +%Y%m%d_%H%M): add_new_user]: Checking if Log file exists."
 if [ -f "${log_file}" ]; then
 
-    echo "[$(date +%Y%m%d_%H%M)add_new_user]: Log file exists." | tee -a "${log_file}"
+
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Log file exists." | tee -a "${log_file}"
     
 
 else
     echo "Log file doesnt exits. creating it"
     touch "${log_file}"
-    echo "[$(date +%Y%m%d_%H%M)add_new_user]: Log file created" | tee -a "${log_file}"
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Log file created" | tee -a "${log_file}"
 
 fi
 
 
+
+
 function add_new_user () {
 
-    echo "[$(date +%Y%m%d_%H%M)add_new_user]: Starting process to add new user."
+    echo "-----------Running add_new_user ------------"
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Starting process to add new user."
 
     firstname=$1
     lastname=$2
@@ -134,11 +153,14 @@ function add_new_user () {
         fi
         
     else
-        echo "[$(date +%Y%m%d_%H%M): add_new_user]: Samba Config Directory already exists."
+        echo "[$(date +%Y%m%d_%H%M): add_new_user]: Samba Backup Config Directory exists."
     fi
 
 
     # Creating Samba Config file for User
+    
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Creating Samba Config file for ${username}"
+
     samba_user_config_file="${samba_users_config_dir}${username}.conf"
 
     tee -a "${samba_user_config_file}" > /dev/null << EOF
@@ -155,6 +177,7 @@ function add_new_user () {
 # This file has been created automatically by add_new_user
 # $(date)
 EOF
+    echo "[$(date +%Y%m%d_%H%M): add_new_user]: Samba Config file for ${username} has been created"
 
     # Adding entry to Global Samba Config File
     if [ -f "${samba_global_config_file}" ]; then
@@ -244,24 +267,24 @@ EOF
 
 
                 else
-                    echo "[$(date +%Y%m%d_%H%M): add_new_user]: WARNING!! Unable to create Backup of fstab file. Exiting"
+                    echo "[$(date +%Y%m%d_%H%M): add_new_user]: WARNING!! Unable to create Backup of fstab file. ... ABORTING!!"
                     exit 1
                 fi
 
               
             else
-                echo "[$(date +%Y%m%d_%H%M): add_new_user]: WARNING Problem Formatting new LV"
+                echo "[$(date +%Y%m%d_%H%M): add_new_user]: WARNING Problem Formatting new LV. ... ABORTING!!"
                 exit 1
             fi
 
 
         else
-            echo "[$(date +%Y%m%d_%H%M): add_new_user]: WARNING Error creating new LV '${username}'"
+            echo "[$(date +%Y%m%d_%H%M): add_new_user]: WARNING Error creating new LV '${username}'..... ABORTING!!"
             exit 1
         fi
 
     else
-        echo "[$(date +%Y%m%d_%H%M): add_new_user]: WARNING !! Volume Group Does not Exist."
+        echo "[$(date +%Y%m%d_%H%M): add_new_user]: WARNING !! Volume Group Does not Exist... ABORTING!!"
         exit 1
 
     fi
