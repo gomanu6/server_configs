@@ -155,8 +155,8 @@ if [ "$(id -u)" -eq 0 ]; then
     browsable = yes
     guest ok = yes
     read only = no
-    create mask = 2755
-    force create mask = 2755
+    create mask = 3755
+    force create mask = 3755
 
 
 # This file has been created automatically by system_user
