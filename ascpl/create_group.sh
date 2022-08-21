@@ -17,7 +17,7 @@ function create_group () {
         else
             echo "[create_group]: WARNING !! Unable to create Group ${groupname}."
         fi
-        echo "[create_group]:  WARNING !! Unable to create Group ${groupname}"
+        
     fi
 
 
