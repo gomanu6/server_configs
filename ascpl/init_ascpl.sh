@@ -13,34 +13,50 @@
 
 
 . ./ascpl.config
-
+. ./create_dir.sh
+. ./create_group.sh
 
 day=$(date +%Y%m%d)
 backup_stamp=$(date +%Y%m%d_%H%M%S)
 
 
 # Create Log Dir and File
-if [ ! -d "${ascpl_log_dir}" ]; then
 
-    if mkdir -vp "${ascpl_log_dir}"; then
+create_dir "${ascpl_log_dir}" "Log"
+touch "${ascpl_init_log_file}"
 
-        touch "${ascpl_init_log_file}"
+
+function ascpl_init () {
+
+
+    apt update -y
+    # apt upgrade -y
+    echo "[ascpl_init]: Updated Repositories"
+
+    if apt install "${dependencies}"; then
+        echo "[ascpl_init]: Installed  ... ${dependencies}"
 
     else
-        echo "[init_ascpl]: WARNING! Problem creating Log Directory"
+        echo "[ascpl_init]: WARNING !!! Problem installing dependencies"
 
     fi
 
-else
-    echo "[init_ascpl]: Log Directory exists"
 
 
-fi
+    create_dir "${ascpl_samba_users_config_dir}" "Samba Users Config"
+    create_dir "${ascpl_config_backups_dir}" "Config Backups"
+    create_dir "${ascpl_config_backups_samba_dir}" "Config Backups - Samba"
+    create_dir "${ascpl_config_backups_fstab_dir}" "Config Backups - fstab"
+    create_dir "${ascpl_config_backups_ssh_dir}" "Config Backups - ssh"
 
-apt update -y
-apt upgrade -y
+    create_group "${default_samba_users_group}"
+    create_group "${default_samba_admin_group}"
 
-apt install "${dependencies}"
+
+
+}
+
+ascpl_init | tee -a "${ascpl_init_log_file}"
 
 
 
