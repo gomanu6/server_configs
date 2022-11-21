@@ -1,4 +1,4 @@
-
+#!/bin/bash
 . ./webserver_settings.config
 
 # https://tonyteaches.tech/aws-ec2-wordpress/
@@ -98,11 +98,7 @@ systemctl list-timers
 
 
 
-## DB backups
 
-cd "${wp_db_backup_dir}"
-
-mysqldump --add-drop-table -h localhost -u "${mysql_username}" -p "${mysql_db_name}" > ${mysql_db_name}.bak.$(date +%Y%m%d).sql
 
 
 
