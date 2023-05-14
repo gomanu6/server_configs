@@ -14,7 +14,9 @@ todays_date=$(date +%F)
 
 source="${source_base}/${user}"
 
-dest="${target_base}/${user}"
+dest="${target_base}/${user}/backups"
+
+log_dest="${target_base}/${user}/logs"
 
 link_dest=""
 
@@ -58,7 +60,7 @@ fi
 # Backup the Directory
 echo "$n Starting Backup for ${user}"
 
-rsync_backup "${user}" "${link_dest}"
+time "${time_format_options}" rsync_backup "${user}" "${link_dest}"
 
 
 
