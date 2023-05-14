@@ -10,7 +10,7 @@ dir_exists() {
     if [ -n "${folder}"]; then
 
 
-        echo "$n Checking in ${folder} exists"
+        echo "$n Checking if ${folder} exists"
 
         if [ -d "${folder}" ]; then
             echo "$n ${folder} exists"
