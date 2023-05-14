@@ -21,7 +21,7 @@ dir_exists() {
 
     else
         echo "$n Please enter valid folder name"
-
         exit 1
+    fi
 
 }
