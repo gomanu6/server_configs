@@ -4,6 +4,7 @@
 . ./backup_settings.config
 . ./direxists.sh
 . ./dir_create.sh
+. ./dir_latest.sh
 . ./rsync_backup.sh
 
 n="[$0]: "
@@ -43,7 +44,8 @@ fi
 
 
 # Check if backup Folder contains previous backups
-last_backup=$(ls -t "${dest}" | head -n 1)
+last_backup=$(dir_latest "${dest}")
+
 if [ -n "${last_backup}" ]; then
     echo "$n Previous backup exists"
     link_dest="--link-dest ${last_backup}"
