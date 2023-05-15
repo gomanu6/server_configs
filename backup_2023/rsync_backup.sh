@@ -6,7 +6,7 @@ rsync_backup() {
 
 
 
-    while getopts s:d:k:b:l: flag
+    while getopts "s:d:k:b:l:" flag;
     do
         case "${flag}" in
             s) source=${OPTARG};;
