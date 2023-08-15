@@ -18,6 +18,7 @@ dir_exists() {
         else
             echo "$n ${folder} does NOT exist"
             return false
+        fi
 
     else
         echo "$n Please enter valid folder name"

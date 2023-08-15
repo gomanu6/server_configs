@@ -9,19 +9,20 @@
 # 
 
 . ./settings_archive_user.config
+. ./dir_exists.sh
 
 day=$(date +%Y%m%d)
 backup_time=$(date +%Y%m%d_%H%M%S)
 
 user="$1"
-source="${source_base}/${user}"
+source_folder="${source_base}/${user}"
 target_folder="${target_folder}/${user}_${day}"
 
 target_archive="${target_archive}/${user}_${day}"
 
 
 # check if source exists
-if dir_exists "${source}"; then
+if dir_exists "${source_folder}"; then
     echo "$0 Source Dir Exists"
 else
     echo "$0 Source Directory does not exist. Nothing to Back Up."
@@ -43,7 +44,7 @@ else
 fi
 
 
-if cp -Rp "${source}" "${target_folder}"; then
+if cp -Rp "${source_folder}" "${target_folder}"; then
     echo "$0 copied folder successdully"
 else
     echo "$0 unable to copy folder"
@@ -51,7 +52,7 @@ fi
 
 
 
-if zip -r "${target_archive}.zip" "${source}"; then
+if zip -r "${target_archive}.zip" "${source_folder}"; then
     echo "$0 zip archive created successfully"
 else
     echo "$0 unable to create zip archive"
@@ -59,9 +60,4 @@ fi
 
 
 
-
-
-
-
-
-
+exit 0
