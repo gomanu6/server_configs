@@ -15,7 +15,7 @@ dir_create() {
             if [ ! -d "${folder}" ]; then
                 echo "${n} ${folder}  doesn't exist, Creating it"
 
-                if mkdir -vp "${folder}" ; then
+                if mkdir -p "${folder}" ; then
                     echo "${n} Created Folder ${folder}"
                 else
                     echo "${n} Unable to Create ${folder}"
