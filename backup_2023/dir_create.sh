@@ -22,6 +22,7 @@ dir_create() {
                 fi
             else
                 echo "${n} ${folder} already exists"
+
             fi
         else
             echo "${n} Please enter a valid Folder name"

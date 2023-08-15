@@ -6,34 +6,31 @@ rsync_backup() {
 
 
 
-    # while getopts "s:d:k:b:l:" flag;
-    # do
-    #     case "${flag}" in
-    #         s) source=${OPTARG};;
-    #         d) dest=${OPTARG};;
-    #         k) link_dest=${OPTARG};;
-    #         b) backup_dir=${OPTARG};;
-    #         l) log_dest=${OPTARG};;
-    #     esac
-    # done
+
 
 
     local n="[$0]: "
 
-
+    local todays_date=$(date +%F)
     local source_folder="$1"
     local dest="$2"
-    local link_dest="$3"
-    local log_file="$4"
-    local backup_dir="$5"
+    local backup_dir="$3"
+    local link_dest="$4"
+    local user="$5"
+    # local log_file="$4"
     
-    local backup_date=$(date +%F)
-    local suffix="deleted_on_${backup_date}"
 
-    local partial_dir="${}"
 
-    rsync -hazvib --suffix="${suffix}" --backup-dir="${backup_dir}" --stats --delete-after "${link_dest}" "${source_folder}" "${dest}"
+    
+    echo "$n <<<<<<<< Starting Backup for ${user} on ${todays_date} >>>>>>>>>>"
+    
+    echo "$n Value of link_dest is: ---> ${link_dest}"
 
+    if [ -z "${link_dest}" ]; then
+        rsync -hazvib --backup-dir="${backup_dir}" --stats --delete-after "${source_folder}" "${dest}"
+    else
+        rsync -hazvib --backup-dir="${backup_dir}" --stats --delete-after "${link_dest}" "${source_folder}" "${dest}"
+    fi
 }
 
 
