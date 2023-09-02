@@ -22,8 +22,8 @@
     link_dest_folder="${target_base}/${user}/backups/"
 
     echo
-    echo "-----------xxxxx----- Start of Backup Job for ${user} on $(date)  -----------xxxxx-----"
-
+    echo "----xxxxx---- Start of Backup Job for ${user} on $(date)  ----xxxxx----"
+    echo
 
 
     dir_create "${log_dest}"
@@ -72,6 +72,5 @@
     rsync_backup "${source_folder}" "${dest}" "${deleted_files}" "${link_dest}" "${user}" 
 
     echo
-    echo "-----------xxxxx----- END of Backup Job for ${user} on $(date)  -----------xxxxx-----"
-    
+    echo "----xxxxx---- END of Backup Job for ${user} on $(date)  ----xxxxx----"
     echo
