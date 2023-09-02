@@ -3,8 +3,8 @@
 
 dir_exists() {
 
-    local n="[$0]: "
-    local folder=$1
+    local n="[dir_exists]: "
+    local folder="$1"
 
 
     if [ -n "${folder}" ]; then
@@ -14,10 +14,11 @@ dir_exists() {
 
         if [ -d "${folder}" ]; then
             echo "$n ${folder} exists"
-            # return true
+            return 0
         else
             echo "$n ${folder} does NOT exist"
-            # return false
+            return 1
+        fi
 
     else
         echo "$n Please enter valid folder name"

@@ -4,7 +4,8 @@
 
 dir_create() {
 
-    local n="[$0]: "
+    local n="[dir_create]: "
+    local x="[dir_create]: "
 
 
     for folder in "$@"
@@ -16,16 +17,15 @@ dir_create() {
                 echo "${n} ${folder}  doesn't exist, Creating it"
 
                 if mkdir -p "${folder}" ; then
-                    echo "${n} Created Folder ${folder}"
+                    echo "$n Created Folder ${folder}"
                 else
-                    echo "${n} Unable to Create ${folder}"
+                    echo "$x Unable to Create ${folder}"
                 fi
             else
-                echo "${n} ${folder} already exists"
-
+                echo "$n ${folder} already exists"
             fi
         else
-            echo "${n} Please enter a valid Folder name"
+            echo "$x Please enter a valid Folder name"
         fi
     done
 
