@@ -143,6 +143,7 @@ This will add a new user with relevant samba permissions
     i = itemize changes, output a change summary for all changes
     --link-dest=DIR = Dir for Hard Linking files
     --log-file=DIR
+#### [rsync output meaning](http://www.staroceans.org/e-book/understanding-the-output-of-rsync-itemize-changes.html)
 
 ##### Backup Commands
 
