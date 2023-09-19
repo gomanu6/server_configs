@@ -14,15 +14,12 @@ dir_exists() {
 
         if [ -d "${folder}" ]; then
             echo "$n ${folder} exists"
-            exit 0
         else
             echo "$n ${folder} does NOT exist"
-            exit 1
         fi
 
     else
         echo "$n Please enter valid folder name"
-        exit 2
     fi
 
 }

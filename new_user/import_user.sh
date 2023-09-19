@@ -3,23 +3,22 @@
 
 # Add User to the system
 # Create users Home Directory
-# Chown Users Directory (Mountpoint) -- moved to after lv
-# chmod users directory (Mountpoint) -- moved to after lv
 # Enable user in Samba
 # Samba Config (check config dir, user config, global config)
-# Create LV part
+# LV Partition exists
 # mount lv path
 # Chown Users Directory (Mounted partition)
 # chmod users directory (Mounted Partition)
 
 
 . ./user_settings.config
-. ./dir_exists.sh
+. ./active_users.config
 . ./dir_create.sh
+. ./dir_exists.sh
 . ./file_exists.sh
 
 day=$(date +%Y%m%d)
-backup_stamp=$(date +%Y%m%d_%H%M%S)
+backup_stamp=$(date +%Y%m%d_%H%M)
 n="[bulk_user]: "
 
 # Log Directory
@@ -50,14 +49,15 @@ else
     echo "${n} WARNING!! Unable to create Backup of fstab file. ...!!"
 fi
 
-function add_bulk_user () {
+function import_user () {
 
-    firstname=$1
-    lastname=$2
-    username=$3
-    password="${1,,}#1234"
+    local firstname=$1
+    local lastname=$2
+    local username=$3
+    local password="${1,,}#1234"
+    local n="[import_user]: "
 
-    echo "-----------Running add_bulk_user for ${username}-on $(date +%Y%m%d_%H%M)-----------"
+    echo "-----------Running import_user for ${username}-on $(date +%Y%m%d_%H%M)-----------"
     echo "${n} Starting process to add ${username}"
     
     local users_dir="${users_base_dir}${username}"
@@ -94,26 +94,6 @@ function add_bulk_user () {
     else
         echo "${n} WARNING !! User Directory for ${username} already exists. Please verify and rectify"
     fi
-
-
-
-    # # Changing Mountpoint Permissions
-    # if chown -v "${username}:${samba_users_group}" "${users_dir}"; then
-    #                 echo "[$(date +%Y%m%d_%H%M)add_new_user]: Mount Point ownership changed"
-
-    #     if chmod -R -v 2755 "${users_dir}"; then
-    #         echo "[$(date +%Y%m%d_%H%M)add_new_user]: Mount Point permissions changed to $(stat -c $'\nOwner Name: %U, \nOwner Group Name: %G, \nMount Point: %m, \nPermission: %A (%a), \nFile Type: %F' ${users_dir})"
-                                
-            
-    #     else
-    #         echo "[$(date +%Y%m%d_%H%M)add_new_user]: WARNING !! There was an error in changing the permissions for ${users_dir}."
-    #         exit 1
-    #     fi
-
-    # else
-    #     echo "[$(date +%Y%m%d_%H%M)add_new_user]: WARNING !! There was an error in setting the ownership for ${users_dir}"
-    #     exit 1
-    # fi
 
 
 
@@ -171,7 +151,7 @@ function add_bulk_user () {
     force create mode = 2755
 
 
-# This file has been created automatically by bulk_user
+# This file has been created automatically by import_user
 # $(date)
 EOF
     echo "${n} Samba Config file for ${username} has been created"
@@ -187,7 +167,7 @@ EOF
 
 
             if echo "------------" >> "${samba_global_config_file}"; then
-                if echo "# Samba Config File entry for ${firstname} ${lastname} (${username})" >> "${samba_global_config_file}"; then
+                if echo "# Samba Config File entry for ${firstname} ${lastname} (${username}), created on ${day}" >> "${samba_global_config_file}"; then
 
                     if echo "include = ${samba_user_config_file}" >> "${samba_global_config_file}"; then
                         echo >> "${samba_global_config_file}"
@@ -217,6 +197,7 @@ EOF
 
 
     # Adding Entry in fstab file
+    lv_path="${vg_path}${username}"
     local UUID="$(sudo blkid -s UUID -o value ${lv_path})"
     local new_fstab_comment="# fstab entry for ${username}, modified on ${day}"
     local new_fstab_entry="UUID=${UUID}  ${users_dir}    ext4    defaults    0   0"
@@ -250,15 +231,15 @@ EOF
         # exit 1
     fi
 
-    echo "${n} ${username} added successfully. \n End of bulk_user... bye ... bye"
+    echo "${n} ${username} added successfully. \n End of import_user... bye ... bye"
 
 }
 
 read -rp "Enter First name : " first_name
 read -rp "Enter Last Name : " last_name
 read -rp "Enter Username : " user_name
-read -rp "Enter password for ${user_name} : " -s user_pass
+# read -rp "Enter password for ${user_name} : " -s user_pass
 
-add_bulk_user "${first_name}" "${last_name}" "${user_name}" "${user_pass}" | tee -a "${log_file}"
-
+# import_user "${first_name}" "${last_name}" "${user_name}" "${user_pass}" | tee -a "${log_file}"
+import_user "${first_name}" "${last_name}" "${user_name}" | tee -a "${log_file}"
 
