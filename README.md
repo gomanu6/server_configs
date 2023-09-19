@@ -20,6 +20,7 @@ This will add a new user with relevant samba permissions
     -r = recursive
     -v = verbose
     -q = quiet
+- smartmontools
 
 #### Init Tasks 
 - set Timezone
@@ -27,6 +28,7 @@ This will add a new user with relevant samba permissions
 - install pre-requisites
 - set bash rc defaults
 - duck dns
+- startup log
 - ssh port
 - sftp setup
 - create directories for system config
