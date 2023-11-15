@@ -67,3 +67,7 @@
 
 
 ##### Link Dest
+
+
+##### cron
+###### [Cron Troubleshooting](https://askubuntu.com/questions/222512/cron-info-no-mta-installed-discarding-output-error-in-the-syslog)
