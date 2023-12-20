@@ -164,3 +164,10 @@ rsync_daily_backup $user $source $dest [$link_dest]
 - enable user in Samba
 - update samba configuration
 - set backup config and script
+
+
+
+
+/mnt/shares/sftp/all/bkp/rbackups/accounts/backups/backup_2023-12-19/accounts/
+
+while IFS= read -r user; do du -sh /mnt/shares/sftp/all/bkp/rbackups/${user}/backups/backup_2023-12-19/${user} >> /home/manu/user_sizes.txt; done < /etc/ascpl/users_to_backup
