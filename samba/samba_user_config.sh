@@ -22,7 +22,6 @@ function samba_user_config () {
     create mode = 1755
     force create mode = 1755
 
-
 #This file has been created automatically by samba_user_config
 $(date)
 EOF
