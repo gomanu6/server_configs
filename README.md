@@ -122,7 +122,7 @@ This will add a new user with relevant samba permissions
 - Backup directory
 - Schedule
 - options
-    z = compress
+    z = compress (only preferable for remote dirs)
     v = verbose
     a = archive, = rlptgoD
         r = recursive, covered in -a
@@ -132,6 +132,11 @@ This will add a new user with relevant samba permissions
         g = preserve group, covered in -a
         o = preserve owner, covered in -a
         D = preserve device files, special files, covered in -a
+    A = preserve acl's
+    X = preserve extended attributes
+    E = preserve executability
+    W = copy whole files (without delta transfer algo) - only compares time/size of file
+    S = turns sequence of nulls into sparse blocks. Sparse files (i.e. files that are for instance holding a file system and that just take the space needed by their actual size)
     h = human readable numbers
     b = make backups (suffix and backup-dir)
         --suffix="_old"
