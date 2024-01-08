@@ -16,4 +16,6 @@ madam
     -N = Name of the array
 
 
-sudo mdadm -v -C /dev/md0 --level=mirror -n 2 -N "USER_RAID" /dev/sda /dev/sdb
+sudo mdadm -v -C /dev/md0 --level=mirror -n 2 -N "USER_RAID" /dev/sda missing
+sudo mdadm --manage --add /dev/md0 /dev/sdb
+
