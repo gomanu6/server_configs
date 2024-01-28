@@ -19,3 +19,6 @@ madam
 sudo mdadm -v -C /dev/md0 --level=mirror -n 2 -N "USER_RAID" /dev/sda missing
 sudo mdadm --manage --add /dev/md0 /dev/sdb
 
+
+# wipe the disk after stopping and zero superblock of raid disk
+sudo wipefs -a /dev/sdb
