@@ -5,7 +5,7 @@ function normalise() {
 
 
     
-    for thefile in $(ls -f *.*); do
+    for thefile in $(ls *.*); do
 
 
         filename=$(basename -- "${thefile}")
