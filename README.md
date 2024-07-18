@@ -178,6 +178,6 @@ rsync_daily_backup $user $source $dest [$link_dest]
 while IFS= read -r user; do du -sh /mnt/shares/sftp/all/bkp/rbackups/${user}/backups/backup_2023-12-19/${user} >> /home/manu/user_sizes.txt; done < /etc/ascpl/users_to_backup
 
 
-cat /sys/class/block/dm-1/dm/name
-
-dmsetup info fedora-root -C -o blkdevname --noheadings
+### Get LVM name / Partition Name from dm-number
+- cat /sys/class/block/dm-1/dm/name
+- dmsetup info fedora-root -C -o blkdevname --noheadings
